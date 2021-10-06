@@ -64,8 +64,8 @@ router.post('/api/temp-upload', (req, res) => {
       console.log("http://f8ad-112-134-176-224.ngrok.io"+ '/' + UnicID)
       res.status(200).send({
         FileName: UnicID,
-        FilePath: req.protocol + '://' + req.get('host') + '/' + UnicID,
-        //FilePath:"http://f8ad-112-134-176-224.ngrok.io"+ '/' + UnicID
+        //FilePath: req.protocol + '://' + req.get('host') + '/' + UnicID,
+        FilePath:"https://app-audit-application.herokuapp.com"+ '/' + UnicID
       });
     }
   });
