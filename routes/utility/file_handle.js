@@ -53,8 +53,8 @@ router.post('/api/temp-upload', (req, res) => {
   console.log(req.body.testdot)
   var base64Data = req.body.testdot.replace(/^data:image\/png;base64,/, "");
   let UnicID = uuidv4() + ".png"
-  //Path = path.join(__dirname, "../../uploads/daily_summery_report/" + UnicID)
-  Path = "../../uploads/daily_summery_report/" + UnicID
+  Path = path.join(__dirname, "../../uploads/daily_summery_report/" + UnicID)
+  //Path = "../../uploads/daily_summery_report/" + UnicID
   console.log("Path ---------------------- ", Path)
   fs.writeFile(Path, base64Data, 'base64', function (err) {
     if (err) {
