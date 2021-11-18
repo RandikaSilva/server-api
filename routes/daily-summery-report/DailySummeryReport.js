@@ -52,7 +52,6 @@ router.post("/api/daily-summery-report", async (req, res, next) => {
         .input("BranchID", sql.Int, Document.BranchID)
         .query("SELECT * FROM [dbo].[MobileDailySummeryReportHeader] WHERE Date = @Date AND BranchID = @BranchID")
         
-        console.log(Validate.recordset)
 
         if (Validate.recordset.Status != 2) {
             console.log("-----------------", Validate.recordset.length)
