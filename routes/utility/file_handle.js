@@ -49,51 +49,44 @@ let upload = multer({ storage: storage }).single("file");
 // });
 
 
-router.post('/api/temp-upload', (req, res) => {
- 
+router.post("/api/temp-upload", (req, res) => {
   var base64Data = req.body.testdot.replace(/^data:image\/png;base64,/, "");
-  let UnicID = uuidv4() + ".png"
-  Path = path.join(__dirname, "../../uploads/daily_summery_report/" + UnicID)
-  
-  fs.writeFile(Path, base64Data, 'base64', function (err) {
+  let UnicID = uuidv4() + ".png";
+  Path = path.join(__dirname, "../../uploads/daily_summery_report/" + UnicID);
+
+  fs.writeFile(Path, base64Data, "base64", function (err) {
     if (err) {
-     
       res.status(500).send({
-        Error: "Error"
+        Error: "Error",
       });
     } else {
       res.status(200).send({
         FileName: UnicID,
         //FilePath: req.protocol + '://' + req.get('host') + '/' + UnicID,
-        FilePath: "http://172.107.180.123:2090" + '/' + UnicID
+        FilePath: "http://45.15.25.24:2090" + "/" + UnicID,
       });
     }
   });
-
 });
 
-
-router.post('/api/upload-document', (req, res) => {
- 
+router.post("/api/upload-document", (req, res) => {
   var base64Data = req.body.testdot.replace(/^data:image\/png;base64,/, "");
-  let UnicID = uuidv4() + ".png"
-  Path = path.join(__dirname, "../../uploads/audit_document/" + UnicID)
-  
-  fs.writeFile(Path, base64Data, 'base64', function (err) {
+  let UnicID = uuidv4() + ".png";
+  Path = path.join(__dirname, "../../uploads/audit_document/" + UnicID);
+
+  fs.writeFile(Path, base64Data, "base64", function (err) {
     if (err) {
-     
       res.status(500).send({
-        Error: "Error"
+        Error: "Error",
       });
     } else {
       res.status(200).send({
         FileName: UnicID,
         //FilePath: req.protocol + '://' + req.get('host') + '/' + UnicID,
-        FilePath: "http://172.107.180.123:2090" + '/' + UnicID
+        FilePath: "http://45.15.25.24:2090" + "/" + UnicID,
       });
     }
   });
-
 });
 
 
