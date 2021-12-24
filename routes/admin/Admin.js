@@ -9,7 +9,6 @@ const { AccessToken } = require("../../configCommon");
 router.post("/api/admin/user-create", async (req, res, next) => {
     try {
        
-        console.log(req.body.UserID)
         let pool = await sql.connect(config);
         let result = await pool
             .request()
@@ -28,13 +27,10 @@ router.post("/api/admin/user-create", async (req, res, next) => {
 
 router.get("/api/master/all-users", async (req, res, next) => {
     try {
-        console.log(req.body.User)
         let pool = await sql.connect(config);
         let result = await pool
             .request()
             .query(`SELECT * FROM [dbo].[MobileUser]`);
-
-        console.log("await result.recordset",await result.recordset)
         res.status(200).json(await result.recordset);
     } catch (e) {
         console.log(e);

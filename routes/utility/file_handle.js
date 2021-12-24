@@ -50,29 +50,55 @@ let upload = multer({ storage: storage }).single("file");
 
 
 router.post('/api/temp-upload', (req, res) => {
-  console.log(req.body.testdot)
+ 
   var base64Data = req.body.testdot.replace(/^data:image\/png;base64,/, "");
   let UnicID = uuidv4() + ".png"
   Path = path.join(__dirname, "../../uploads/daily_summery_report/" + UnicID)
-  //Path = "../../uploads/daily_summery_report/" + UnicID
-  console.log("Path ---------------------- ", Path)
+  
   fs.writeFile(Path, base64Data, 'base64', function (err) {
     if (err) {
-      console.log("Error ---------------------- ", err)
+     
       res.status(500).send({
         Error: "Error"
       });
     } else {
-      console.log("http://f8ad-112-134-176-224.ngrok.io" + '/' + UnicID)
       res.status(200).send({
         FileName: UnicID,
         //FilePath: req.protocol + '://' + req.get('host') + '/' + UnicID,
-        FilePath: "https://app-audit-application.herokuapp.com" + '/' + UnicID
+        FilePath: "http://172.107.180.123:2090" + '/' + UnicID
       });
     }
   });
 
 });
+
+
+router.post('/api/upload-document', (req, res) => {
+ 
+  var base64Data = req.body.testdot.replace(/^data:image\/png;base64,/, "");
+  let UnicID = uuidv4() + ".png"
+  Path = path.join(__dirname, "../../uploads/audit_document/" + UnicID)
+  
+  fs.writeFile(Path, base64Data, 'base64', function (err) {
+    if (err) {
+     
+      res.status(500).send({
+        Error: "Error"
+      });
+    } else {
+      res.status(200).send({
+        FileName: UnicID,
+        //FilePath: req.protocol + '://' + req.get('host') + '/' + UnicID,
+        FilePath: "http://172.107.180.123:2090" + '/' + UnicID
+      });
+    }
+  });
+
+});
+
+
+
+
 
 router.post("/api/report-upload", (req, res, next) => {
   try {

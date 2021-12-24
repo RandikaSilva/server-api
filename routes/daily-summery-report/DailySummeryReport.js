@@ -7,13 +7,11 @@ var router = express.Router();
 
 router.get("/api/daily-summery-report", async (req, res, next) => {
     try {
-        console.log(req.body.User)
         let pool = await sql.connect(config);
         let result = await pool
             .request()
             .query(`SELECT * FROM [dbo].[Branch] `);
 
-        console.log("await result.recordset", await result.recordset)
         res.status(200).json(await result.recordset);
     } catch (e) {
         console.log(e);
@@ -23,14 +21,28 @@ router.get("/api/daily-summery-report", async (req, res, next) => {
 
 router.get("/api/daily-summery-report-uploaded-image", async (req, res, next) => {
     try {
-        console.log(req.query.DocumentID)
         let pool = await sql.connect(config);
         let result = await pool
             .request()
             .input("DocumentID", sql.Int, req.query.DocumentID)
             .query(`SELECT * FROM [dbo].[MobileDailySummeryReportDocument] Where [DailySummeryReportID] = @DocumentID `);
 
-        console.log("/api/daily-summery-report-uploaded-image", await result.recordset)
+        res.status(200).json(await result.recordset);
+    } catch (e) {
+        console.log(e);
+        next(e);
+    }
+});
+
+router.get("/api/upload-audit-document", async (req, res, next) => {
+    try {
+        let pool = await sql.connect(config);
+        let result = await pool
+            .request()
+            .input("DocumentID", sql.Int, req.query.DocumentID)
+            .input("MainDocTypeID", sql.Int, req.query.MainDocTypeID)
+            .query(`SELECT * FROM [dbo].[MobileAuditDocument] Where JobID = @DocumentID AND MainDocTypeID =  @MainDocTypeID `);
+
         res.status(200).json(await result.recordset);
     } catch (e) {
         console.log(e);
@@ -41,21 +53,19 @@ router.get("/api/daily-summery-report-uploaded-image", async (req, res, next) =>
 router.post("/api/daily-summery-report", async (req, res, next) => {
     try {
 
-        console.log("-----------------", req.body.DocumentID)
         let pool = await sql.connect(config);
-        
+
         let Document = JSON.parse(req.body.DocumentData)
-        
+
         let Validate = await pool
-        .request()
-        .input("Date", sql.Date, Document.Date)
-        .input("BranchID", sql.Int, Document.BranchID)
-        .query("SELECT * FROM [dbo].[MobileDailySummeryReportHeader] WHERE Date = @Date AND BranchID = @BranchID")
-        
+            .request()
+            .input("Date", sql.Date, Document.Date)
+            .input("BranchID", sql.Int, Document.BranchID)
+            .query("SELECT * FROM [dbo].[MobileDailySummeryReportHeader] WHERE Date = @Date AND BranchID = @BranchID")
+
 
         if (Validate.recordset.Status != 2) {
-            console.log("-----------------", Validate.recordset.length)
-            if ((req.body.DocumentID >= 1 && Validate.recordset.length >= 1) || (req.body.DocumentID ==0 && Validate.recordset.length ==0)) {
+            if ((req.body.DocumentID >= 1 && Validate.recordset.length >= 1) || (req.body.DocumentID == 0 && Validate.recordset.length == 0)) {
                 let result = await pool
                     .request()
                     .input("UserID", sql.Int, req.body.UserID)
@@ -92,7 +102,6 @@ router.get("/api/user-wise-daily-summery-report", async (req, res, next) => {
             .input("BranchID", sql.Int, req.query.BranchID)
             .execute(`MobileDailySummeryReportSSP`);
 
-        console.log("await result.recordset", await result.recordset)
         res.status(200).json(await result.recordset);
     } catch (e) {
         console.log(e);
@@ -102,7 +111,6 @@ router.get("/api/user-wise-daily-summery-report", async (req, res, next) => {
 
 router.get("/api/daily-summery-report-load-default-data", async (req, res, next) => {
     try {
-        console.log("req.query.Date", req.query.Date)
         let pool = await sql.connect(config);
         let result = await pool
             .request()
@@ -110,7 +118,6 @@ router.get("/api/daily-summery-report-load-default-data", async (req, res, next)
             .input("Date", sql.Date, req.query.Date)
             .execute(`MobileDailySummeryReportDefaultDataSSP`);
 
-        console.log("await result.recordset", await result.recordset)
         res.status(200).json(await result.recordset);
     } catch (e) {
         console.log(e);
@@ -118,6 +125,26 @@ router.get("/api/daily-summery-report-load-default-data", async (req, res, next)
     }
 });
 
+
+
+router.post('/api/upload-audit-document',async (req, res, next) => {
+    try {
+        console.log("req.query",req.body)
+        let pool = await sql.connect(config);
+        let result = await pool
+            .request()
+            .input("UserID", sql.Int, req.body.UserID)
+            .input("DocumentID", sql.Int, req.body.DocumentID)
+            .input("MainDocTypeID", sql.Int, req.body.MainDocTypeID)
+            .input("DocumentData", sql.NVarChar(sql.MAX), req.body.DocumentData)
+            .execute(`MobileAuditDocumentMSP`);
+
+        res.status(200).json(await result.recordset);
+    } catch (e) {
+        console.log(e);
+        next(e);
+    }
+});
 
 router.post("/api/user-wise-daily-summery-report", async (req, res, next) => {
     try {
