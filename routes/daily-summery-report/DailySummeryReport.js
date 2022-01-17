@@ -39,8 +39,7 @@ router.get(
   "/api/daily-summery-report-02-uploaded-image",
   async (req, res, next) => {
     try {
-
-        console.log("req.query.DocumentID", req.query.DocumentID);
+      console.log("req.query.DocumentID", req.query.DocumentID);
 
       let pool = await sql.connect(config);
       let result = await pool
@@ -211,9 +210,11 @@ router.post("/api/daily-summery-report-02", async (req, res, next) => {
           "SELECT * FROM [dbo].[MobileDailySummery02Report] WHERE AutoID = @DocumentID AND Status = 2"
         );
 
-      if (AvailableData.length > 0) {
+      if (AvailableData.recordset.length > 0) {
         Validate = 1;
       }
+      console.log("AvailableData", AvailableData);
+      console.log("Validate", Validate);
     }
 
     if (Validate != 1) {
