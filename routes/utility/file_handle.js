@@ -7,8 +7,8 @@ var { v4: uuidv4 } = require("uuid");
 const fs = require("fs");
 const download = require("download");
 var fileupload = require("express-fileupload");
-const base64Img = require('base64-img');
-const uuid = require("uuid")
+const base64Img = require("base64-img");
+const uuid = require("uuid");
 router.use(fileupload());
 
 let Location = {
@@ -34,20 +34,16 @@ let upload = multer({ storage: storage }).single("file");
 //   try {
 //     var base64Data = req.body.testdot;
 
-
 //     const fileContents = new Buffer(base64Data, 'base64')
 //     fs.writeFile("../../uploads/", fileContents, (err) => {
 //       if (err) return console.error(err)
 //       console.log('file saved to ', "../../uploads/")
 //     })
 
-
-
 //   } catch (error) {
 //     console.error(error);
 //   }
 // });
-
 
 router.post("/api/temp-upload", (req, res) => {
   var base64Data = req.body.testdot.replace(/^data:image\/png;base64,/, "");
@@ -88,10 +84,6 @@ router.post("/api/upload-document", (req, res) => {
     }
   });
 });
-
-
-
-
 
 router.post("/api/report-upload", (req, res, next) => {
   try {
@@ -140,11 +132,10 @@ router.post("/api/upload/internship", function (req, res, next) {
     res.send({
       success: true,
       message: "File uploaded!",
-      filePath: folder + req.query.FileName
+      filePath: folder + req.query.FileName,
     });
   });
 });
-
 
 router.post("/api/upload/profile-image", function (req, res, next) {
   const file = req.files.file;
@@ -158,7 +149,8 @@ router.post("/api/upload/profile-image", function (req, res, next) {
     res.send({
       success: true,
       message: "File uploaded!",
-      filePath: req.protocol + '://' + req.get('host') + '/' + req.query.FileName
+      filePath:
+        req.protocol + "://" + req.get("host") + "/" + req.query.FileName,
     });
   });
 });
@@ -242,6 +234,26 @@ router.get("/api/file-download/internship", async (req, res, next) => {
   } catch (error) {
     console.log(error);
   }
+});
+
+router.post("/api/upload-document-daily_summery_report-02", (req, res) => {
+  var base64Data = req.body.testdot.replace(/^data:image\/png;base64,/, "");
+  let UnicID = uuidv4() + ".png";
+  Path = path.join(__dirname, "../../uploads/daily_summer_rerport02/" + UnicID);
+
+  fs.writeFile(Path, base64Data, "base64", function (err) {
+    if (err) {
+      res.status(500).send({
+        Error: "Error",
+      });
+    } else {
+      res.status(200).send({
+        FileName: UnicID,
+        //FilePath: req.protocol + '://' + req.get('host') + '/' + UnicID,
+        FilePath: "http://45.15.25.24:2090" + "/" + UnicID,
+      });
+    }
+  });
 });
 
 module.exports = router;
