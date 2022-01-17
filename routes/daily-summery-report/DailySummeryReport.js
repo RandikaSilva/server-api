@@ -205,7 +205,7 @@ router.post("/api/daily-summery-report-02", async (req, res, next) => {
         .request()
         .input("DocumentID", sql.Int, req.body.DocumentID)
         .query(
-          "SELECT * FROM [dbo].[MobileDailySummeryReport02Header] WHERE AutoID = @DocumentID Where Status = 2"
+          "SELECT * FROM [dbo].[MobileDailySummery02Report] WHERE AutoID = @DocumentID Where Status = 2"
         );
 
       if (AvailableData.length > 0) {
