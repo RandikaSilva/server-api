@@ -61,6 +61,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, "./uploads/daily_summery_report")));
 app.use(express.static(path.join(__dirname, "./uploads/audit_document")));
+app.use(
+  express.static(path.join(__dirname, "./uploads/daily_summer_rerport02"))
+);
 
 app.use("/", Admin);
 app.use("/", Branch);
