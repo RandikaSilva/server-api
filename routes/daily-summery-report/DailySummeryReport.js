@@ -39,6 +39,9 @@ router.get(
   "/api/daily-summery-report-02-uploaded-image",
   async (req, res, next) => {
     try {
+
+        console.log("req.query.DocumentID", req.query.DocumentID);
+
       let pool = await sql.connect(config);
       let result = await pool
         .request()
