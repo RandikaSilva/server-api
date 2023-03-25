@@ -10,6 +10,7 @@ var fileupload = require("express-fileupload");
 const base64Img = require("base64-img");
 const uuid = require("uuid");
 router.use(fileupload());
+const { Buffer } = require("buffer");
 
 let Location = {
   Application: path.join(__dirname, "../../uploads/temp"),
@@ -243,7 +244,7 @@ router.post("/api/upload-document-daily_summery_report-02", (req, res) => {
 
   fs.writeFile(Path, base64Data, "base64", function (err) {
     if (err) {
-      res.status(500).send({
+      res.status(500).json({
         Error: "Error",
       });
     } else {
@@ -251,6 +252,28 @@ router.post("/api/upload-document-daily_summery_report-02", (req, res) => {
         FileName: UnicID,
         //FilePath: req.protocol + '://' + req.get('host') + '/' + UnicID,
         FilePath: "http://45.132.242.146:2090" + "/" + UnicID,
+      });
+    }
+  });
+});
+
+router.post("/api/upload-document-lecture-attendance-images", (req, res) => {
+  const fileBuffer = Buffer.from(req.files.file.data);
+  let UnicID = uuidv4() + ".png";
+  Path = path.join(
+    __dirname,
+    "../../uploads/lecture_attendance_images/" + UnicID
+  );
+
+  fs.writeFile(Path, fileBuffer, function (err) {
+    if (err) {
+      res.status(500).send({
+        Error: "Error",
+      });
+    } else {
+      res.status(200).json({
+        FileName: UnicID,
+        FilePath: "http://localhost:3000" + "/" + UnicID,
       });
     }
   });
