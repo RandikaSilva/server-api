@@ -273,7 +273,7 @@ router.post("/api/upload-document-lecture-attendance-images", (req, res) => {
     } else {
       res.status(200).json({
         FileName: UnicID,
-        FilePath: "http://localhost:3000" + "/" + UnicID,
+        FilePath: "http://31.220.63.95:2090" + "/" + UnicID,
       });
     }
   });
