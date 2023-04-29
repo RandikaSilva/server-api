@@ -60,7 +60,7 @@ router.post("/api/temp-upload", (req, res) => {
       res.status(200).send({
         FileName: UnicID,
         //FilePath: req.protocol + '://' + req.get('host') + '/' + UnicID,
-        FilePath: "http://45.132.242.146:2090" + "/" + UnicID,
+        FilePath: "http://31.220.63.95:2090" + "/" + UnicID,
       });
     }
   });
@@ -80,7 +80,7 @@ router.post("/api/upload-document", (req, res) => {
       res.status(200).send({
         FileName: UnicID,
         //FilePath: req.protocol + '://' + req.get('host') + '/' + UnicID,
-        FilePath: "http://45.132.242.146:2090" + "/" + UnicID,
+        FilePath: "http://31.220.63.95:2090" + "/" + UnicID,
       });
     }
   });
@@ -251,7 +251,7 @@ router.post("/api/upload-document-daily_summery_report-02", (req, res) => {
       res.status(200).send({
         FileName: UnicID,
         //FilePath: req.protocol + '://' + req.get('host') + '/' + UnicID,
-        FilePath: "http://45.132.242.146:2090" + "/" + UnicID,
+        FilePath: "http://31.220.63.95:2090" + "/" + UnicID,
       });
     }
   });
