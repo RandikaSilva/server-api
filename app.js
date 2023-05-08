@@ -50,6 +50,10 @@ var Lecture = require("./routes/lecture/lecture");
 var DailySummeryReport = require("./routes/daily-summery-report/DailySummeryReport");
 var fileHandleRouter = require("./routes/utility/file_handle");
 var job = require("./routes/new_job/job");
+var student = require("./routes/student/student");
+var expences = require("./routes/expences/expences");
+var bank_deposite = require("./routes/bank-deposit/bank_deposit");
+
 const { AccessToken } = require("./configCommon");
 
 app.set("views", path.join(__dirname, "views"));
@@ -68,6 +72,11 @@ app.use(
 app.use(
   express.static(path.join(__dirname, "./uploads/lecture_attendance_images"))
 );
+app.use(
+  express.static(path.join(__dirname, "./uploads/student_profile_image"))
+);
+app.use(express.static(path.join(__dirname, "./uploads/expences")));
+app.use(express.static(path.join(__dirname, "./uploads/bank_deposite")));
 
 app.use("/", Admin);
 app.use("/", Branch);
@@ -75,6 +84,9 @@ app.use("/", DailySummeryReport);
 app.use("/", fileHandleRouter);
 app.use("/", job);
 app.use("/", Lecture);
+app.use("/", student);
+app.use("/", expences);
+app.use("/", bank_deposite);
 
 app.use(function (req, res, next) {
   next(createError(404));

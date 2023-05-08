@@ -279,4 +279,61 @@ router.post("/api/upload-document-lecture-attendance-images", (req, res) => {
   });
 });
 
+router.post("/api/upload-student-profile-image", (req, res) => {
+  const fileBuffer = Buffer.from(req.files.file.data);
+  let UnicID = uuidv4() + ".png";
+  Path = path.join(__dirname, "../../uploads/student_profile_image/" + UnicID);
+
+  fs.writeFile(Path, fileBuffer, function (err) {
+    if (err) {
+      res.status(500).send({
+        Error: "Error",
+      });
+    } else {
+      res.status(200).json({
+        FileName: UnicID,
+        FilePath: "http://31.220.63.95:2090" + "/" + UnicID,
+      });
+    }
+  });
+});
+
+router.post("/api/upload-expences-image", (req, res) => {
+  const fileBuffer = Buffer.from(req.files.file.data);
+  let UnicID = uuidv4() + ".png";
+  Path = path.join(__dirname, "../../uploads/expences/" + UnicID);
+
+  fs.writeFile(Path, fileBuffer, function (err) {
+    if (err) {
+      res.status(500).send({
+        Error: "Error",
+      });
+    } else {
+      res.status(200).json({
+        FileName: UnicID,
+        FilePath: "http://31.220.63.95:2090" + "/" + UnicID,
+      });
+    }
+  });
+});
+
+router.post("/api/upload-bank-deposit-image", (req, res) => {
+  const fileBuffer = Buffer.from(req.files.file.data);
+  let UnicID = uuidv4() + ".png";
+  Path = path.join(__dirname, "../../uploads/bank_deposite/" + UnicID);
+
+  fs.writeFile(Path, fileBuffer, function (err) {
+    if (err) {
+      res.status(500).send({
+        Error: "Error",
+      });
+    } else {
+      res.status(200).json({
+        FileName: UnicID,
+        FilePath: "http://31.220.63.95:2090" + "/" + UnicID,
+      });
+    }
+  });
+});
+
 module.exports = router;
