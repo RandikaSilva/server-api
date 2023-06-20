@@ -336,4 +336,23 @@ router.post("/api/upload-bank-deposit-image", (req, res) => {
   });
 });
 
+router.post("/api/upload-pending-application-image", (req, res) => {
+  const fileBuffer = Buffer.from(req.files.file.data);
+  let UnicID = uuidv4() + ".png";
+  Path = path.join(__dirname, "../../uploads/certificate/" + UnicID);
+
+  fs.writeFile(Path, fileBuffer, function (err) {
+    if (err) {
+      res.status(500).send({
+        Error: "Error",
+      });
+    } else {
+      res.status(200).json({
+        FileName: UnicID,
+        FilePath: "http://31.220.63.95:2090" + "/" + UnicID,
+      });
+    }
+  });
+});
+
 module.exports = router;

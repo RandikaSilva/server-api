@@ -53,6 +53,7 @@ var job = require("./routes/new_job/job");
 var student = require("./routes/student/student");
 var expences = require("./routes/expences/expences");
 var bank_deposite = require("./routes/bank-deposit/bank_deposit");
+var application = require("./routes/student/application");
 
 const { AccessToken } = require("./configCommon");
 
@@ -77,6 +78,7 @@ app.use(
 );
 app.use(express.static(path.join(__dirname, "./uploads/expences")));
 app.use(express.static(path.join(__dirname, "./uploads/bank_deposite")));
+app.use(express.static(path.join(__dirname, "./uploads/certificate")));
 
 app.use("/", Admin);
 app.use("/", Branch);
@@ -87,6 +89,7 @@ app.use("/", Lecture);
 app.use("/", student);
 app.use("/", expences);
 app.use("/", bank_deposite);
+app.use("/", application);
 
 app.use(function (req, res, next) {
   next(createError(404));
