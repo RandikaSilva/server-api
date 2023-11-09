@@ -355,4 +355,66 @@ router.post("/api/upload-pending-application-image", (req, res) => {
   });
 });
 
+router.get("/api/delete-expences", async (req, res) => {
+  try {
+    var files = req.query.FileName.split("|");
+
+    files.forEach((element) => {
+      fs.unlinkSync(path.join(__dirname, `../../uploads/expences`, element));
+    });
+
+    console.log("File is deleted.");
+    res.status(200).json({ Result: "File is deleted." });
+  } catch (error) {
+    res.status(500).send({
+      Error: "Error",
+    });
+  }
+});
+
+router.get("/api/delete-bank-deposit-image", async (req, res) => {
+  try {
+    var files = req.query.FileName.split("|");
+
+    files.forEach((element) => {
+      fs.unlinkSync(
+        path.join(__dirname, `../../uploads/bank_deposite`, element)
+      );
+    });
+
+    console.log("File is deleted.");
+    res.status(200).json({ Result: "File is deleted." });
+  } catch (error) {
+    res.status(500).send({
+      Error: "Error",
+    });
+  }
+});
+
+router.get(
+  "/api/delete-document-lecture-attendance-images",
+  async (req, res) => {
+    try {
+      var files = req.query.FileName.split("|");
+
+      files.forEach((element) => {
+        fs.unlinkSync(
+          path.join(
+            __dirname,
+            `../../uploads/lecture_attendance_images`,
+            element
+          )
+        );
+      });
+
+      console.log("File is deleted.");
+      res.status(200).json({ Result: "File is deleted." });
+    } catch (error) {
+      res.status(500).send({
+        Error: "Error",
+      });
+    }
+  }
+);
+
 module.exports = router;
